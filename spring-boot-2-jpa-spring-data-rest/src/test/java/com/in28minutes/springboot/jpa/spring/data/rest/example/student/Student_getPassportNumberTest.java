@@ -1,0 +1,1 @@
+This test case is missing the `Student` and `Passport` classes. Therefore, I cannot regenerate the code without knowing the implementation of these classes.
