@@ -1,0 +1,46 @@
+scenarios:
+  - name: Successful API request
+    description: This scenario tests a successful API request.
+    steps:
+      - request:
+          url: http://localhost:8080/api/products
+          method: POST
+          headers:
+            Content-Type: application/json
+          body: '{"name": "Product 1", "description": "This is a product", "price": 10.0}'
+      - response:
+          status_code: 200
+          body:
+            id: 1
+            name: Product 1
+            description: This is a product
+            price: 10.0
+  - name: API request with validation failure
+    description: This scenario tests an API request with validation failure.
+    steps:
+      - request:
+          url: http://localhost:8080/api/products
+          method: POST
+          headers:
+            Content-Type: application/json
+          body: '{"name": "Product 1"}'
+      - response:
+          status_code: 400
+          body:
+            message: "The request body is invalid. The following fields are required: description, price"
+  - name: API request with edge case
+    description: This scenario tests an API request with an edge case.
+    steps:
+      - request:
+          url: http://localhost:8080/api/products
+          method: POST
+          headers:
+            Content-Type: application/json
+          body: '{"name": "Product 1", "description": "This is a product", "price": "10.0"}'
+      - response:
+          status_code: 200
+          body:
+            id: 1
+            name: Product 1
+            description: This is a product
+            price: 10.0

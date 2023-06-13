@@ -1,0 +1,37 @@
+scenarios:
+  - name: Successful API request
+    request:
+      method: GET
+      url: /products/4
+      headers:
+        Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POkS0IeKNf4Va1Iug
+    response:
+      status_code: 200
+      body:
+        id: 4
+        name: 1
+        description: banana
+        price: 50.0
+  - name: API request with validation failure
+    request:
+      method: GET
+      url: /products/232
+      headers:
+        Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POkS0IeKNf4Va1Iug
+    response:
+      status_code: 404
+      body:
+        error: Product not found
+  - name: API request with edge case
+    request:
+      method: GET
+      url: /products/2
+      headers:
+        Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POkS0IeKNf4Va1Iug
+    response:
+      status_code: 200
+      body:
+        id: 2
+        name: apple
+        description: apple
+        price: 50.0

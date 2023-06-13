@@ -1,0 +1,67 @@
+scenarios:
+  - name: Successful API request
+    description: This test verifies that a successful API request returns a 200 status code and the expected data.
+    steps:
+      - request:
+          url: http://localhost:8080/api/products
+          method: GET
+          headers:
+            Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VybmFtZSIsImlhdCI6MTY0NzI3MjYyNCwiZXhwIjoxNjQ3MjcxNTI0fQ.k5547538-6193-480c-818d-945818516521
+      - response:
+          status_code: 200
+          body:
+            [
+              {
+                "id": 1,
+                "name": "Product 1",
+                "price": 100.00,
+                "quantity": 10
+              },
+              {
+                "id": 2,
+                "name": "Product 2",
+                "price": 200.00,
+                "quantity": 20
+              }
+            ]
+  - name: API request with validation failure
+    description: This test verifies that an API request with validation errors returns a 400 status code and the expected error message.
+    steps:
+      - request:
+          url: http://localhost:8080/api/products
+          method: POST
+          headers:
+            Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VybmFtZSIsImlhdCI6MTY0NzI3MjYyNCwiZXhwIjoxNjQ3MjcxNTI0fQ.k5547538-6193-480c-818d-945818516521
+          body:
+            {
+              "name": "Product 1",
+              "price": 100.00,
+              "quantity": 10
+            }
+      - response:
+          status_code: 400
+          body:
+            {
+              "message": "The request body is invalid. The following fields are required: description"
+            }
+  - name: API request with edge case
+    description: This test verifies that an API request with an edge case returns a 200 status code and the expected data.
+    steps:
+      - request:
+          url: http://localhost:8080/api/products
+          method: GET
+          headers:
+            Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VybmFtZSIsImlhdCI6MTY0NzI3MjYyNCwiZXhwIjoxNjQ3MjcxNTI0fQ.k5547538-6193-480c-818d-945818516521
+          params:
+            name: Product 1
+      - response:
+          status_code: 200
+          body:
+            [
+              {
+                "id": 1,
+                "name": "Product 1",
+                "price": 100.00,
+                "quantity": 10
+              }
+            ]
