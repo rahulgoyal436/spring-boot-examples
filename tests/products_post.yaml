@@ -1,0 +1,46 @@
+scenarios:
+  - name: Successful API request
+    description: This test scenario verifies that a successful API request returns a 200 status code and the expected data.
+    steps:
+      - request:
+        url: http://localhost:8080/api/products
+        method: POST
+        headers:
+          Content-Type: application/json
+        body: '{"name": "Apple", "description": "A delicious fruit", "price": 1.99}'
+      - response:
+        status_code: 200
+        body:
+          id: 1
+          name: Apple
+          description: A delicious fruit
+          price: 1.99
+  - name: API request with validation failure
+    description: This test scenario verifies that an API request with invalid data returns a 400 status code and the expected error message.
+    steps:
+      - request:
+        url: http://localhost:8080/api/products
+        method: POST
+        headers:
+          Content-Type: application/json
+        body: '{"name": "", "description": "A delicious fruit", "price": 1.99}'
+      - response:
+        status_code: 400
+        body:
+          message: "Validation failed: name is required"
+  - name: API request with edge case
+    description: This test scenario verifies that an API request with special characters or large data returns a 200 status code and the expected data.
+    steps:
+      - request:
+        url: http://localhost:8080/api/products
+        method: POST
+        headers:
+          Content-Type: application/json
+        body: '{"name": "漢字", "description": "特殊文字", "price": 9.99999999999E9}'
+      - response:
+        status_code: 200
+        body:
+          id: 1
+          name: 漢字
+          description: 特殊文字
+          price: 9.99999999999E9
