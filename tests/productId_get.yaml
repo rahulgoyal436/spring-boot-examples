@@ -1,0 +1,49 @@
+scenarios:
+  - name: Successful API request
+    description: This test scenario verifies that a valid API request returns a successful response.
+    steps:
+      - request:
+        url: /products/{productId}
+        method: GET
+        headers:
+          Authorization: Bearer <your-api-token>
+        body:
+          productId: <product-id>
+      - assert:
+        statusCode: 200
+        body:
+          id: <product-id>
+          name: <product-name>
+          price: <product-price>
+  - name: API request with validation failure
+    description: This test scenario verifies that an invalid API request returns a validation error.
+    steps:
+      - request:
+        url: /products/{productId}
+        method: GET
+        headers:
+          Authorization: Bearer <your-api-token>
+        body:
+          productId: <invalid-product-id>
+      - assert:
+        statusCode: 400
+        body:
+          error: "Invalid product ID"
+  - name: API request with edge case
+    description: This test scenario verifies that an API request with special characters or large data returns a successful response.
+    steps:
+      - request:
+        url: /products/{productId}
+        method: GET
+        headers:
+          Authorization: Bearer <your-api-token>
+        body:
+          productId: <product-id>
+          name: <product-name>
+          price: <product-price>
+      - assert:
+        statusCode: 200
+        body:
+          id: <product-id>
+          name: <product-name>
+          price: <product-price>

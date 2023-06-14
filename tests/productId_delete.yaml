@@ -1,0 +1,61 @@
+scenarios:
+  - name: Successful API request
+    request:
+      method: GET
+      url: /products/{productId}
+      headers:
+        Authorization: Bearer <token>
+    response:
+      status_code: 200
+      body:
+        productId: <productId>
+        name: <productName>
+        price: <price>
+        quantity: <quantity>
+    assertions:
+      - status_code: 200
+      - json_path: $.productId
+        value: <productId>
+      - json_path: $.name
+        value: <productName>
+      - json_path: $.price
+        value: <price>
+      - json_path: $.quantity
+        value: <quantity>
+  - name: API request with validation failure
+    request:
+      method: GET
+      url: /products/{productId}
+      headers:
+        Authorization: Bearer <token>
+    response:
+      status_code: 400
+      body:
+        error: Invalid product ID
+    assertions:
+      - status_code: 400
+      - json_path: $.error
+        value: Invalid product ID
+  - name: API request with edge case
+    request:
+      method: GET
+      url: /products/{productId}
+      headers:
+        Authorization: Bearer <token>
+    response:
+      status_code: 200
+      body:
+        productId: <productId>
+        name: <productName>
+        price: <price>
+        quantity: <quantity>
+    assertions:
+      - status_code: 200
+      - json_path: $.productId
+        value: <productId>
+      - json_path: $.name
+        value: <productName>
+      - json_path: $.price
+        value: <price>
+      - json_path: $.quantity
+        value: <quantity>
