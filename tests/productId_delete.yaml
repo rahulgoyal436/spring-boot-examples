@@ -1,0 +1,49 @@
+---
+
+- name: "Successful API request"
+  description: "Test that the API returns a successful response for a valid request."
+  request:
+    url: "/products/{productId}"
+    method: "GET"
+    headers:
+      Content-Type: "application/json"
+    body:
+      productId: "1234567890"
+  response:
+    status_code: 200
+    body:
+      productId: "1234567890"
+      name: "Product Name"
+      price: 10.00
+      quantity: 10
+
+- name: "API request with validation failure"
+  description: "Test that the API returns an error response for an invalid request."
+  request:
+    url: "/products/{productId}"
+    method: "GET"
+    headers:
+      Content-Type: "application/json"
+    body:
+      productId: ""
+  response:
+    status_code: 400
+    body:
+      error: "Invalid product ID"
+
+- name: "API request with edge case"
+  description: "Test that the API returns a successful response for a request with special characters or large data."
+  request:
+    url: "/products/{productId}"
+    method: "GET"
+    headers:
+      Content-Type: "application/json"
+    body:
+      productId: "1234567890-a-b-c-d-e-f-g-h-i-j-k-l-m-n-o-p-q-r-s-t-u-v-w-x-y-z"
+  response:
+    status_code: 200
+    body:
+      productId: "1234567890-a-b-c-d-e-f-g-h-i-j-k-l-m-n-o-p-q-r-s-t-u-v-w-x-y-z"
+      name: "Product Name"
+      price: 10.00
+      quantity: 10

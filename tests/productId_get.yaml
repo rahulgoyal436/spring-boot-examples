@@ -1,0 +1,60 @@
+---
+
+- name: "Successful API request"
+  description: "This test scenario verifies that the API can successfully return a product by its ID."
+  request:
+    url: "/products/{productId}"
+    method: "GET"
+    headers:
+      Content-Type: "application/json"
+    body:
+      productId: "1234567890"
+  response:
+    status_code: 200
+    body:
+      type: "object"
+      properties:
+        id:
+          type: "string"
+        name:
+          type: "string"
+        price:
+          type: "number"
+        quantity:
+          type: "number"
+
+- name: "API request with validation failure"
+  description: "This test scenario verifies that the API will return an error if the product ID is not provided."
+  request:
+    url: "/products/{productId}"
+    method: "GET"
+    headers:
+      Content-Type: "application/json"
+    body:
+      productId: ""
+  response:
+    status_code: 400
+    body:
+      type: "object"
+      properties:
+        error:
+          type: "string"
+          example: "Product ID is required."
+
+- name: "API request with edge case"
+  description: "This test scenario verifies that the API can handle a product ID that is too long."
+  request:
+    url: "/products/{productId}"
+    method: "GET"
+    headers:
+      Content-Type: "application/json"
+    body:
+      productId: "123456789012345678901234567890"
+  response:
+    status_code: 400
+    body:
+      type: "object"
+      properties:
+        error:
+          type: "string"
+          example: "Product ID is too long."

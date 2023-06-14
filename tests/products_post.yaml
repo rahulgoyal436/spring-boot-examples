@@ -1,0 +1,69 @@
+---
+
+- name: Create product
+  description: Create a product with valid data
+  request:
+    url: /products
+    method: POST
+    headers:
+      Content-Type: application/json
+    body:
+      {
+        "id": 3,
+        "name": "漢字",
+        "description": "特殊文字",
+        "price": 9.99999999999E9
+      }
+  response:
+    status_code: 200
+    body:
+      {
+        "id": 3,
+        "name": "漢字",
+        "description": "特殊文字",
+        "price": 9.99999999999E9
+      }
+
+- name: Create product with validation failure
+  description: Create a product with invalid data
+  request:
+    url: /products
+    method: POST
+    headers:
+      Content-Type: application/json
+    body:
+      {
+        "name": "漢字",
+        "description": "特殊文字",
+        "price": 9.99999999999E9
+      }
+  response:
+    status_code: 400
+    body:
+      {
+        "message": "The product name is required."
+      }
+
+- name: Create product with edge case
+  description: Create a product with special characters or large data
+  request:
+    url: /products
+    method: POST
+    headers:
+      Content-Type: application/json
+    body:
+      {
+        "id": 3,
+        "name": "漢字",
+        "description": "特殊文字",
+        "price": 9.99999999999E9
+      }
+  response:
+    status_code: 200
+    body:
+      {
+        "id": 3,
+        "name": "漢字",
+        "description": "特殊文字",
+        "price": 9.99999999999E9
+      }
