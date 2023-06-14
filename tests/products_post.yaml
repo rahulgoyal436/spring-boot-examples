@@ -1,0 +1,42 @@
+scenarios:
+  - name: Successful API request
+    request:
+      method: POST
+      url: /api/products
+      headers:
+        Content-Type: application/json
+      body: '{"name": "Product 1", "description": "This is a product description", "price": 10.0}'
+    response:
+      status_code: 200
+      body:
+        id: 1
+        name: Product 1
+        description: This is a product description
+        price: 10.0
+  - name: API request with validation failure
+    request:
+      method: POST
+      url: /api/products
+      headers:
+        Content-Type: application/json
+      body: '{"name": "", "description": "This is a product description", "price": 10.0}'
+    response:
+      status_code: 400
+      body:
+        error: "Validation failed"
+        errors:
+          - "Name is required"
+  - name: API request with edge case
+    request:
+      method: POST
+      url: /api/products
+      headers:
+        Content-Type: application/json
+      body: '{"name": "漢字", "description": "特殊文字", "price": 9.99999999999E9}'
+    response:
+      status_code: 200
+      body:
+        id: 3
+        name: 漢字
+        description: 特殊文字
+        price: 9.99999999999E9
